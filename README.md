@@ -15,6 +15,14 @@ This repository will record the practice code for learning Diffusion.
 
 
 
+### Tasks
+
+Task-1：图像生成
+
+
+
+
+
 ### References
 
 [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239)
