@@ -16,11 +16,11 @@ class DDPM(nn.Module):
         
         assert step_T > 0, "must meet: step_T > 0"
         assert 0 < betas[0] < betas[1] < 1, "must meet: 0 < beta1 < beta2 < 1"
-        
-        self.beta_t = (betas[0] - betas[1]) * [i / step_T for i in range(1, step_T + 1)] + betas[0]
-        self.alpha_t = 1 - self.beta_t
+        noise_rate = [(i / step_T) for i in range(1, step_T + 1)]
+        self.beta_t = [(betas[0] - betas[1]) * rate + betas[0] for rate in noise_rate]
+        self.alpha_t = [1 - beta for beta in self.beta_t]
         self.alphabar_t = np.cumprod(self.alpha_t)
-        
+
     def forward(self, x) -> torch.Tensor:
         noise = torch.randn_like(x).to(x.device)
         ts = torch.randint(0, self.T + 1, size = (x.shape[0], ))
